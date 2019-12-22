@@ -1,8 +1,14 @@
 # --------------------------------------------------------
 # Fully Convolutional Instance-aware Semantic Segmentation
 # Copyright (c) 2017 Microsoft
-# Licensed under The Apache-2.0 License [see LICENSE for details]
+# Licensed under The MIT License [see LICENSE for details]
 # Modified by Yi Li
+# --------------------------------------------------------
+# Based on:
+# MX-RCNN
+# Copyright (c) 2016 by Contributors
+# Licence under The Apache 2.0 License
+# https://github.com/ijkguo/mx-rcnn/
 # --------------------------------------------------------
 
 import cPickle
@@ -22,7 +28,7 @@ from utils.mask_voc2coco import mask_voc2coco
 from utils.tictoc import tic, toc
 import hickle as hkl
 from bbox.bbox_transform import clip_boxes
-import multiprocessing as mp
+import multiprocessing.dummy as mp
 
 def coco_results_one_category_kernel(data_pack):
     cat_id = data_pack['cat_id']

@@ -1,9 +1,14 @@
 # --------------------------------------------------------
 # Fully Convolutional Instance-aware Semantic Segmentation
-# Copyright (c) 2016 by Contributors
 # Copyright (c) 2017 Microsoft
-# Licensed under The Apache-2.0 License [see LICENSE for details]
+# Licensed under The MIT License [see LICENSE for details]
 # Modified by Haozhi Qi, Haochen Zhang, Guodong Zhang, Yi Li
+# --------------------------------------------------------
+# Based on:
+# MX-RCNN
+# Copyright (c) 2016 by Contributors
+# Licence under The Apache 2.0 License
+# https://github.com/ijkguo/mx-rcnn/
 # --------------------------------------------------------
 
 import cPickle
@@ -129,8 +134,11 @@ def pred_eval(predictor, test_data, imdb, cfg, vis=False, thresh=1e-3, logger=No
                         all_masks[j][idx + delta] = cls_masks[keep, :]
                 else:
                     masks = masks[:, 1:, :, :]
+                    im_height = np.round(im_shapes[delta][0] / scales[delta]).astype('int')
+                    im_width = np.round(im_shapes[delta][1] / scales[delta]).astype('int')
+                    boxes = clip_boxes(boxes, (im_height, im_width))
                     result_mask, result_box = mask_voting(masks, boxes, scores, imdb.num_classes,
-                                                          max_per_image, im_shapes[delta][1], im_shapes[delta][0],
+                                                          max_per_image, im_width, im_height,
                                                           cfg.TEST.NMS, cfg.TEST.MASK_MERGE_THRESH,
                                                           cfg.BINARY_THRESH)
                     for j in xrange(1, imdb.num_classes):

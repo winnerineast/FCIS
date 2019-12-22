@@ -1,9 +1,14 @@
 # --------------------------------------------------------
 # Fully Convolutional Instance-aware Semantic Segmentation
-# Copyright (c) 2016 by Contributors
 # Copyright (c) 2017 Microsoft
-# Licensed under The Apache-2.0 License [see LICENSE for details]
+# Licensed under The MIT License [see LICENSE for details]
 # Modified by Haozhi Qi, Guodong Zhang
+# --------------------------------------------------------
+# Based on:
+# MX-RCNN
+# Copyright (c) 2016 by Contributors
+# Licence under The Apache 2.0 License
+# https://github.com/ijkguo/mx-rcnn/
 # --------------------------------------------------------
 
 import pprint
@@ -40,7 +45,7 @@ def test_fcis(config, dataset, image_set, root_path, dataset_path,
     test_data = TestLoader(sdsdb, config, batch_size=len(ctx), shuffle=shuffle, has_rpn=has_rpn)
 
     # load model
-    arg_params, aux_params = load_param(prefix, epoch, process=True)
+    arg_params, aux_params = load_param(prefix, epoch, process=False)
 
     # infer shape
     data_shape_dict = dict(test_data.provide_data_single)
